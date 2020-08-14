@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import os
 import stripe
 from os import remove
 from os.path import isfile
@@ -13,19 +14,20 @@ Alright, primetime, this will actually give people money, so be sure about the f
 stripe.api_key = '!!!ADD API KEY!!!'
 
 # Configure input and output
-data_directory = 'data/'
-refund_list_file_name = data_directory + 'refunds.csv'
-refund_log_file_name = data_directory + 'refunds.log'
+data_directory = 'data'
+script_dir = os.path.join(os.path.dirname(__file__), data_directory)
+refund_list_file_name = os.path.join(script_dir, 'refunds.csv')
+refund_log_file_name = os.path.join(script_dir, 'refunds.log')
 
 # Read the entire input file into memory
 with open(refund_list_file_name) as input_file:
-    input_file_raw = in_file.readlines()
+    input_file_raw = input_file.readlines()
 # Remove whitespace from the ends of each line
 stripped = [line.strip() for line in input_file_raw]
 # Split each line into a subarray broken up by tabs
 split = [line.split('\t') for line in stripped]
 # Convert each subarray into a dictionary for easy reference
-refunds = [{"email": line[0], "amount": int(line[1]), "id": line[2]} for line in split]
+refunds = [{"amount": int(line[0]), "email": line[1], "id": line[2]} for line in split]
 
 # Immutable sum of the entire refund.
 refund_list = list(map(lambda line: line['amount'], refunds))
@@ -63,12 +65,12 @@ for refund in refunds:
       amount=refund['amount'],
       reason="requested_by_customer",
     )
-    response = "PROCESSED PROPERLY! \n"
+    response = "PROCESSED SUCCESSFULLY! \n"
   except:
     response = "***********FAILED TO PROCESS*********** \n"
 
-    # Output post-request string
-    super_print(log_file, output_string)
+  # Output post-request string
+  super_print(log_file, response)
 
 # Close output file
 log_file.close()

@@ -16,15 +16,16 @@ However, I have received persmission from the company to post the script.
 
 This script is a bit manual, but that is mostly intentional. You need to run each part independently which is a safe-guard against accidental refund.
 
+1. Import the [Stripe API](https://stripe.com/docs/libraries) library if necessary
 1. Replace the API Key in the get\_customers.py file with one you desire.
-2. Add filtering options to the filtering\_method of the get\_customers.py file
-3. Run charge\_to\_list.py to convert to an easier to view CSV
-4. Open the CSV and ensure all the the refunds are ones to perform, things can go very wrong.
-5. If everything seems swell, and you are sure, replace the API KEY in the actually\_refund.py
-6. Run actually\_refund.py
+1. Add filtering options to the filtering\_method of the get\_customers.py file
+1. Run charge\_to\_list.py to convert to an easier to view CSV
+1. Open the CSV and ensure all the the refunds are ones to perform, things can go very wrong.
+1. If everything seems swell, and you are sure, replace the API KEY in the actually\_refund.py
+1. Run actually\_refund.py
 
 # Disclaimer
 
 The API may change, the script may not work, check the scripts work before moving on because it could seriously mess up your bank account.
 
-This has been tested on amounts larger than a million USD so I can't say forsure it works on more than that.
+This has been tested on amounts larger than a million USD so I can't say for sure it works on more than that.

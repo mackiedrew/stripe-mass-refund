@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import os
 from json import (loads as JSON)
 from os import remove
 from os.path import isfile
@@ -10,26 +11,27 @@ JSON file into a CSV (spreadsheet or excel document) which contains easy informa
 '''
 
 # Configure input and output
-data_directory = 'data/'
-input_file_name = data_directory + 'charges.json'
-output_file_name = data_directory + 'refunds.csv'
+data_directory = 'data'
+script_dir = os.path.join(os.path.dirname(__file__), data_directory)
+input_file_name = os.path.join(script_dir, 'charges.json')
+output_file_name = os.path.join(script_dir, 'refunds.csv')
 
 # Check to ensure that the input file exists
 if not isfile(input_file_name):
   exit()
 
 # Read the entire input file into memory
-with open(charges_json_file) as input_file:
+with open(input_file_name) as input_file:
   input_file_data = input_file.read()
 
 # Convert the raw input into JSON
-input_file_JSON = JSON(input_file_rawdata)
+input_file_JSON = JSON(input_file_data)
 
 # Output total refunds
 print("Total entries: " + str(len(input_file_JSON)))
 
 # Create output file object in writing mode
-output_file = open(output_file_name, 'w')
+output_file = open(output_file_name, 'w+')
 
 # 
 for charge in input_file_JSON:
